@@ -69,15 +69,15 @@ export const ServicesGrid: React.FC = () => {
             </div>
           </div>
 
-          {/* Columna Derecha: Especialista con máscara orgánica cerrada 360° y casco sobresaliente */}
+          {/* Columna Derecha: Especialistas supervisando maquinaria pesada con brazo hidráulico sobresaliente en 3D */}
           <div className="lg:col-span-7 xl:col-span-7 flex justify-center lg:justify-end relative z-10">
             <Reveal direction="zoom-in" delay={0.1} className="w-full flex justify-center lg:justify-end">
-              <div className="w-full max-w-[500px] sm:max-w-[560px] lg:max-w-[610px]">
+              <div className="w-full max-w-[520px] sm:max-w-[580px] lg:max-w-[650px]">
                 <svg
-                  viewBox="120 85 790 885"
+                  viewBox="105 40 875 795"
                   className="w-full h-auto block select-none overflow-visible drop-shadow-[0_18px_38px_rgba(6,27,75,0.08)]"
                   role="img"
-                  aria-label="Especialista de Valle Logistics inspeccionando maquinaria e importaciones"
+                  aria-label="Especialistas de Valle Logistics inspeccionando y dirigiendo maquinaria pesada de importación"
                 >
                   <defs>
                     {/* Degradado de la cinta curva superior: Amarillo/Ámbar en la izquierda -> Azul Marino en la derecha y base */}
@@ -90,24 +90,24 @@ export const ServicesGrid: React.FC = () => {
 
                     {/* Máscara de recorte orgánica CERRADA al 100% para la fotografía superior derecha */}
                     <clipPath id="topPhotoClip">
-                      <path d="M 495, 222 C 585, 205, 675, 128, 755, 148 C 835, 168, 868, 268, 862, 410 C 856, 550, 820, 682, 742, 780 C 655, 888, 505, 915, 355, 902 C 218, 890, 168, 812, 206, 690 C 244, 568, 302, 452, 352, 345 C 390, 262, 432, 234, 495, 222 Z" />
+                      <path d="M 475, 248 C 565, 240, 685, 224, 785, 232 C 880, 242, 932, 338, 928, 495 C 924, 638, 888, 728, 782, 752 C 655, 780, 450, 782, 300, 758 C 178, 738, 138, 665, 154, 545 C 168, 440, 192, 348, 252, 302 C 308, 262, 388, 258, 475, 248 Z" />
                     </clipPath>
 
-                    {/* Recorte superior para que el casco de seguridad sobresalga limpiamente por encima de la curva */}
+                    {/* Recorte superior para que el brazo hidráulico de la máquina sobresalga limpiamente por encima de la curva */}
                     <clipPath id="topHelmetPopOutClip">
-                      <rect x="320" y="80" width="430" height="275" />
+                      <rect x="420" y="35" width="440" height="240" />
                     </clipPath>
                   </defs>
 
                   {/* 1. Cinta curva exterior CERRADA (Forma orgánica completa sin cortes rectos) */}
                   <path
-                    d="M 490, 192 C 590, 172, 685, 85, 772, 108 C 862, 132, 902, 245, 896, 400 C 890, 555, 862, 712, 785, 822 C 698, 942, 530, 968, 358, 952 C 195, 938, 128, 842, 168, 705 C 208, 568, 268, 450, 318, 335 C 358, 242, 412, 208, 490, 192 Z"
+                    d="M 470, 218 C 565, 210, 690, 192, 802, 200 C 908, 212, 966, 322, 962, 495 C 958, 655, 916, 764, 796, 792 C 660, 825, 445, 826, 288, 798 C 148, 774, 102, 688, 120, 550 C 136, 430, 164, 326, 230, 274 C 294, 230, 382, 226, 470, 218 Z"
                     fill="url(#topRibbonGrad)"
                   />
 
                   {/* 2. Refuerzo de onda superior derecha en Azul Marino corporativo */}
                   <path
-                    d="M 490, 192 C 590, 172, 685, 85, 772, 108 C 845, 128, 885, 210, 894, 325 L 855, 335 C 848, 235, 815, 165, 755, 148 C 675, 128, 585, 205, 495, 222 Z"
+                    d="M 470, 218 C 565, 210, 690, 192, 802, 200 C 895, 210, 952, 295, 960, 420 L 925, 425 C 918, 315, 868, 240, 785, 232 C 685, 224, 565, 240, 475, 248 Z"
                     fill="#061B4B"
                   />
 
@@ -115,23 +115,23 @@ export const ServicesGrid: React.FC = () => {
                   <g clipPath="url(#topPhotoClip)">
                     <image
                       href="/images/services-showcase-top.jpg"
-                      x="60"
-                      y="0"
-                      width="840"
-                      height="960"
-                      preserveAspectRatio="xMidYMid slice"
+                      x="45"
+                      y="40"
+                      width="930"
+                      height="767"
+                      preserveAspectRatio="none"
                     />
                   </g>
 
-                  {/* 4. Efecto 3D Pop-Out: El casco del especialista sobresale sobre el borde curvo */}
+                  {/* 4. Efecto 3D Pop-Out: La parte superior del brazo de la máquina sobresale sobre el borde curvo */}
                   <g clipPath="url(#topHelmetPopOutClip)">
                     <image
                       href="/images/services-showcase-top-cutout.png"
-                      x="60"
-                      y="0"
-                      width="840"
-                      height="960"
-                      preserveAspectRatio="xMidYMid slice"
+                      x="45"
+                      y="40"
+                      width="930"
+                      height="767"
+                      preserveAspectRatio="none"
                     />
                   </g>
                 </svg>
