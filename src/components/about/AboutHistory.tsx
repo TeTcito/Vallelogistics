@@ -206,7 +206,7 @@ export const AboutHistory: React.FC = () => {
                 <div className="mt-4 pt-3.5 border-t border-slate-200/70 flex items-center justify-between text-[11px] sm:text-xs font-heading font-bold text-brand-navy">
                   <span>Vallelogistics and Import</span>
                   <span className="text-brand-yellow-hover">
-                    — Conectamos oportunidades, movemos soluciones.
+                    — Conectamos oportunidades, movemos tu futuro.
                   </span>
                 </div>
               </div>

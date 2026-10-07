@@ -42,7 +42,7 @@ export const COMPANY_DATA: CompanyData = {
   name: 'Valle Logistics and Import',
   legalName: 'Valle Logistics & Import',
   tagline: 'Importaciones, Comercio Exterior, Logística Internacional & Maquinaria',
-  slogan: 'Conectamos oportunidades, movemos soluciones',
+  slogan: 'Conectamos oportunidades, movemos tu futuro',
   description:
     'Somos una empresa ecuatoriana especializada en importaciones y soluciones logísticas, comprometida con conectar a nuestros clientes con proveedores y productos confiables a nivel internacional. Nuestra experiencia se centra en la importación de maquinaria, repuestos, partes y accesorios para vehículos de carga pesada y maquinaria, además de la gestión de importaciones de todo tipo de productos.',
   yearsOfExperience: 15,

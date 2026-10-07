@@ -215,7 +215,7 @@ export const AboutAlliances: React.FC = () => {
                 <span className="block">Elegirnos</span>
               </h3>
               <p className="text-xs text-brand-navy/85 leading-relaxed mt-3 font-medium">
-                Vallelogistics and Import — conectamos oportunidades, movemos soluciones.
+                Vallelogistics and Import — conectamos oportunidades, movemos tu futuro.
               </p>
             </div>
           </Reveal>

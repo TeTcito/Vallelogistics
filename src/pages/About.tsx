@@ -44,7 +44,7 @@ export const About: React.FC = () => {
             <Reveal direction="left" delay={0.12}>
               <h1 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-[46px] text-white leading-[1.12] tracking-tight">
                 <span className="block">Conectamos Oportunidades,</span>
-                <span className="block mt-1">Movemos Soluciones.</span>
+                <span className="block mt-1">Movemos Tu Futuro.</span>
               </h1>
             </Reveal>
 
