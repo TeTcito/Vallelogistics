@@ -10,7 +10,7 @@ import {
   Layers,
 } from 'lucide-react';
 import { Product } from '@/types';
-import { PRODUCTS_DATA } from '@/data/products';
+import { useProducts } from '@/hooks/useProducts';
 import { COMPANY_DATA, getProductWhatsAppLink } from '@/data/company';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -19,18 +19,19 @@ import { Reveal } from '@/components/ui/Reveal';
 import { WhatsAppIcon } from '@/components/ui/WhatsAppIcon';
 
 export const HomeFeaturedProducts: React.FC = () => {
+  const { products } = useProducts();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
   // Filtrado de productos destacados
   const displayedProducts = useMemo(() => {
     if (selectedCategory === 'all') {
-      return PRODUCTS_DATA.slice(0, 8);
+      return products.slice(0, 8);
     }
-    return PRODUCTS_DATA.filter(
+    return products.filter(
       (p) => p.category.toLowerCase() === selectedCategory.toLowerCase()
     ).slice(0, 8);
-  }, [selectedCategory]);
+  }, [products, selectedCategory]);
 
   const handleSelectCategory = (catName: string) => {
     setSelectedCategory(catName);
@@ -307,7 +308,7 @@ export const HomeFeaturedProducts: React.FC = () => {
                     Catálogo General
                   </span>
                   <span className="font-heading font-bold text-xs sm:text-sm uppercase truncate block">
-                    Todos los Repuestos ({PRODUCTS_DATA.length})
+                    Todos los Repuestos ({products.length})
                   </span>
                 </div>
               </button>
@@ -601,7 +602,7 @@ export const HomeFeaturedProducts: React.FC = () => {
                 size="md"
                 icon={<ArrowRight className="w-4 h-4" />}
               >
-                Explorar Catálogo Completo ({PRODUCTS_DATA.length} Repuestos)
+                Explorar Catálogo Completo ({products.length} Repuestos)
               </Button>
               <Button
                 href={`https://wa.me/${COMPANY_DATA.whatsappNumber}?text=${encodeURIComponent(

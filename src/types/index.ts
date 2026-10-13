@@ -11,9 +11,11 @@ export interface Product {
   compatibility: string[];
   tag?: ProductTag;
   price?: number;
+  showPrice?: boolean;
   rating?: number;
   description?: string;
   stockStatus?: 'Disponible' | 'Bajo pedido' | 'Consultar' | 'Próximamente';
+  createdAt?: string;
 }
 
 export interface ServiceItem {

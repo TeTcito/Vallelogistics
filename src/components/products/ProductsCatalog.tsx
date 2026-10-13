@@ -12,9 +12,11 @@ import {
   Layers,
   Sparkles,
   RotateCcw,
+  ArrowUpDown,
 } from 'lucide-react';
 import { Product } from '@/types';
-import { PRODUCTS_DATA, PRODUCT_CATEGORIES, BRANDS_LIST } from '@/data/products';
+import { PRODUCT_CATEGORIES, BRANDS_LIST } from '@/data/products';
+import { useProducts } from '@/hooks/useProducts';
 import { COMPANY_DATA, getProductWhatsAppLink } from '@/data/company';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -31,12 +33,15 @@ const ITEMS_PER_PAGE = 9;
 export const ProductsCatalog: React.FC<ProductsCatalogProps> = ({
   initialCategory,
 }) => {
+  const { products } = useProducts();
+
   // Estados de filtrado, búsqueda y paginación
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>(
     initialCategory || 'all'
   );
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<string>('recent');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
@@ -48,10 +53,10 @@ export const ProductsCatalog: React.FC<ProductsCatalogProps> = ({
     }
   }, [initialCategory]);
 
-  // Volver a la página 1 cuando cambian los filtros
+  // Volver a la página 1 cuando cambian los filtros u ordenamiento
   useEffect(() => {
     setCurrentPage(1);
-  }, [search, selectedCategory, selectedBrand]);
+  }, [search, selectedCategory, selectedBrand, sortBy]);
 
   // Acordeón en sidebar
   const [isCategoryAccordionOpen, setIsCategoryAccordionOpen] = useState(true);
@@ -62,12 +67,13 @@ export const ProductsCatalog: React.FC<ProductsCatalogProps> = ({
     setSearch('');
     setSelectedCategory('all');
     setSelectedBrand('all');
+    setSortBy('recent');
     setCurrentPage(1);
   };
 
-  // Filtrado reactivo de productos
+  // Filtrado y ordenamiento reactivo de productos
   const filteredProducts = useMemo(() => {
-    return PRODUCTS_DATA.filter((item) => {
+    const list = products.filter((item) => {
       // 1. Búsqueda por nombre, SKU o compatibilidad
       if (search.trim() !== '') {
         const query = search.toLowerCase();
@@ -98,12 +104,31 @@ export const ProductsCatalog: React.FC<ProductsCatalogProps> = ({
 
       return true;
     });
-  }, [search, selectedCategory, selectedBrand]);
+
+    // Ordenamiento: por defecto "Más recientes" primero
+    return [...list].sort((a, b) => {
+      if (sortBy === 'recent') {
+        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return timeB - timeA;
+      }
+      if (sortBy === 'price-asc') {
+        return (a.price ?? Infinity) - (b.price ?? Infinity);
+      }
+      if (sortBy === 'price-desc') {
+        return (b.price ?? -Infinity) - (a.price ?? -Infinity);
+      }
+      if (sortBy === 'name-asc') {
+        return a.name.localeCompare(b.name);
+      }
+      return 0;
+    });
+  }, [products, search, selectedCategory, selectedBrand, sortBy]);
 
   // Productos "Más vendidos" para el bloque del sidebar
   const bestsellers = useMemo(() => {
-    return PRODUCTS_DATA.filter((p) => p.tag === 'Más vendido').slice(0, 3);
-  }, []);
+    return products.filter((p) => p.tag === 'Más vendido').slice(0, 3);
+  }, [products]);
 
   // Cálculos de paginación
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / ITEMS_PER_PAGE));
@@ -197,10 +222,10 @@ export const ProductsCatalog: React.FC<ProductsCatalogProps> = ({
                       }`}
                     >
                       <span>Todas las Familias</span>
-                      <span className="text-[11px] opacity-75">{PRODUCTS_DATA.length}</span>
+                      <span className="text-[11px] opacity-75">{products.length}</span>
                     </button>
                     {PRODUCT_CATEGORIES.map((cat) => {
-                      const count = PRODUCTS_DATA.filter((p) => p.category === cat.name).length;
+                      const count = products.filter((p) => p.category === cat.name).length;
                       const isSelected = selectedCategory === cat.name;
                       return (
                         <button
@@ -309,7 +334,7 @@ export const ProductsCatalog: React.FC<ProductsCatalogProps> = ({
             </Reveal>
 
             {/* Botón de limpiar filtros */}
-            {(search || selectedCategory !== 'all' || selectedBrand !== 'all') && (
+            {(search || selectedCategory !== 'all' || selectedBrand !== 'all' || sortBy !== 'recent') && (
               <Button
                 variant="outline"
                 size="sm"
@@ -325,6 +350,34 @@ export const ProductsCatalog: React.FC<ProductsCatalogProps> = ({
 
           {/* GRILLA DE ARTÍCULOS (9 columnas en desktop) */}
           <div className="lg:col-span-9">
+            {/* BARRA SUPERIOR DE ORDENAMIENTO Y RESULTADOS */}
+            <div className="bg-white rounded-2xl p-3.5 sm:p-4 mb-6 shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="text-xs sm:text-sm text-slate-600 font-medium">
+                Mostrando <span className="font-bold text-brand-dark">{filteredProducts.length}</span> {filteredProducts.length === 1 ? 'artículo' : 'artículos en catálogo'}
+              </div>
+
+              <div className="flex items-center gap-2.5 self-start sm:self-auto">
+                <ArrowUpDown className="w-4 h-4 text-brand-blue flex-shrink-0" />
+                <label
+                  htmlFor="catalog-sort"
+                  className="text-xs font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap"
+                >
+                  Ordenar por:
+                </label>
+                <select
+                  id="catalog-sort"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="bg-slate-50 hover:bg-slate-100/80 border border-slate-200 text-slate-800 text-xs sm:text-sm rounded-xl px-3 py-1.5 font-semibold outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-colors cursor-pointer shadow-sm"
+                >
+                  <option value="recent">Más recientes</option>
+                  <option value="price-asc">Precio: Menor a Mayor</option>
+                  <option value="price-desc">Precio: Mayor a Menor</option>
+                  <option value="name-asc">Nombre: A - Z</option>
+                </select>
+              </div>
+            </div>
+
             {/* ESTADO VACÍO */}
             {displayedProducts.length === 0 ? (
               <div className="bg-white rounded-2xl p-12 text-center border border-slate-200 space-y-4">
@@ -647,7 +700,7 @@ export const ProductsCatalog: React.FC<ProductsCatalogProps> = ({
                 Modelos de Maquinaria Compatibles:
               </h4>
               <div className="flex flex-wrap gap-1.5">
-                {quickViewProduct.compatibility.map((c, i) => (
+                {quickViewProduct.compatibility.map((c: string, i: number) => (
                   <span
                     key={i}
                     className="text-xs bg-brand-light border border-slate-200 px-2.5 py-1 rounded-md text-brand-dark font-medium"
