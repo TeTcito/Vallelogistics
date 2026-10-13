@@ -93,6 +93,7 @@ export const ContactFormSection: React.FC = () => {
           mensaje: data.message,
           _subject: `Nuevo contacto web: ${data.subject} - ${data.name}`,
           _template: 'table',
+          _captcha: 'false',
         }),
       });
     } catch (err) {
