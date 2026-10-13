@@ -353,12 +353,22 @@ export const AdminDashboard: React.FC = () => {
                     </div>
 
                     <div className="text-xs text-slate-500 font-medium self-end sm:self-auto flex flex-wrap items-center gap-2.5">
+                      <button
+                        type="button"
+                        onClick={handleSyncCloud}
+                        disabled={syncingCloud}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-brand-blue text-slate-700 hover:text-brand-blue text-[11px] font-bold shadow-2xs transition-colors"
+                        title="Subir y sincronizar productos de este navegador con la nube de Supabase"
+                      >
+                        <RefreshCw className={`w-3 h-3 text-brand-blue ${syncingCloud ? 'animate-spin' : ''}`} />
+                        <span>{syncingCloud ? 'Sincronizando...' : 'Sincronizar Nube'}</span>
+                      </button>
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 border border-blue-200/80 text-brand-blue text-[11px] font-bold">
                         <Clock className="w-3.5 h-3.5" />
                         <span>Más recientes primero</span>
                       </span>
                       <div className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" title="Conexión en la nube activa" />
                         <span>
                           Mostrando{' '}
                           <strong className="text-slate-800 font-bold">
