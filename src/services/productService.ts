@@ -54,9 +54,21 @@ export async function fetchAllProducts(): Promise<DatabaseProduct[]> {
       data.forEach((p: DatabaseProduct) => remoteMap.set(p.id, p));
 
       // Sobrescribir con locales más recientes si existen
+      const pendingSync: DatabaseProduct[] = [];
       localList.forEach((local) => {
+        const existingRemote = remoteMap.get(local.id);
+        if (!existingRemote) {
+          pendingSync.push(local);
+        }
         remoteMap.set(local.id, local);
       });
+
+      // Intentar sincronizar en segundo plano productos que solo están en local
+      if (pendingSync.length > 0) {
+        setTimeout(() => {
+          syncPendingLocalProducts().catch(() => {});
+        }, 1000);
+      }
 
       return Array.from(remoteMap.values()).sort((a, b) => {
         const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
@@ -100,7 +112,83 @@ export async function fetchAllProducts(): Promise<DatabaseProduct[]> {
   })).reverse();
 }
 
-export async function persistProduct(product: DatabaseProduct): Promise<void> {
+export async function syncPendingLocalProducts(): Promise<{
+  total: number;
+  synced: number;
+  failed: number;
+  rlsBlocked: boolean;
+}> {
+  const localList = getLocalProducts();
+  if (localList.length === 0) {
+    return { total: 0, synced: 0, failed: 0, rlsBlocked: false };
+  }
+
+  let synced = 0;
+  let failed = 0;
+  let rlsBlocked = false;
+
+  for (const prod of localList) {
+    try {
+      const { error } = await supabase
+        .from('products')
+        .upsert(prod, { onConflict: 'id' });
+
+      if (!error) {
+        synced++;
+      } else {
+        failed++;
+        if (error.code === '42501' || error.message.toLowerCase().includes('policy')) {
+          rlsBlocked = true;
+        }
+        console.warn('Sincronización pendiente falló:', prod.name, error.message);
+      }
+    } catch {
+      failed++;
+    }
+  }
+
+  return { total: localList.length, synced, failed, rlsBlocked };
+}
+
+export async function checkCloudWritable(): Promise<{ writable: boolean; reason?: string }> {
+  try {
+    const probeId = '__rls_probe__';
+    const { error } = await supabase.from('products').upsert(
+      {
+        id: probeId,
+        name: 'Probe',
+        category: 'Llantas',
+        compatibility: [],
+        rating: 5,
+        stock_status: 'Disponible',
+        show_price: false,
+      },
+      { onConflict: 'id' }
+    );
+
+    if (error) {
+      if (error.code === '42501' || error.message.toLowerCase().includes('policy')) {
+        return {
+          writable: false,
+          reason: 'Bloqueado por Row-Level Security (RLS) en Supabase (error 42501).',
+        };
+      }
+      return { writable: false, reason: error.message };
+    }
+
+    // Limpiar el registro sonda
+    await supabase.from('products').delete().eq('id', probeId);
+    return { writable: true };
+  } catch (err: any) {
+    return { writable: false, reason: err.message };
+  }
+}
+
+export async function persistProduct(product: DatabaseProduct): Promise<{
+  success: boolean;
+  cloudSynced: boolean;
+  cloudError?: string;
+}> {
   // Asegurar fecha de creación para ordenación correcta
   if (!product.created_at) {
     product.created_at = new Date().toISOString();
@@ -126,17 +214,26 @@ export async function persistProduct(product: DatabaseProduct): Promise<void> {
   saveLocalProducts(currentList);
 
   // 2. Intentar guardar en Supabase
+  let cloudSynced = false;
+  let cloudError: string | undefined;
+
   try {
     const { error } = await supabase
       .from('products')
       .upsert(product, { onConflict: 'id' });
 
     if (error) {
+      cloudError = error.message;
       console.warn('Nota sobre sincronización en Supabase:', error.message);
+    } else {
+      cloudSynced = true;
     }
-  } catch (err) {
+  } catch (err: any) {
+    cloudError = err.message || 'Error de red con Supabase';
     console.warn('Aviso al sincronizar en la nube:', err);
   }
+
+  return { success: true, cloudSynced, cloudError };
 }
 
 export async function removeProduct(id: string): Promise<void> {
