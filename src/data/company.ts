@@ -9,8 +9,14 @@ export interface CompanyData {
   phoneDisplay: string;
   phoneSecondary: string;
   phoneSecondaryDisplay: string;
+  phoneSales: string;
+  phoneSalesDisplay: string;
   whatsappNumber: string;
   whatsappDisplay: string;
+  whatsappQuotesNumber: string;
+  whatsappQuotesDisplay: string;
+  whatsappSalesNumber: string;
+  whatsappSalesDisplay: string;
   email: string;
   emailSales: string;
   address: string;
@@ -21,7 +27,9 @@ export interface CompanyData {
   social: {
     facebook: string;
     tiktok: string;
+    instagram: string;
     whatsapp: string;
+    whatsappQuotes: string;
     whatsappContact: string;
   };
   stats: {
@@ -47,15 +55,21 @@ export const COMPANY_DATA: CompanyData = {
     'Somos una empresa ecuatoriana especializada en importaciones y soluciones logísticas, comprometida con conectar a nuestros clientes con proveedores y productos confiables a nivel internacional. Nuestra experiencia se centra en la importación de maquinaria, repuestos, partes y accesorios para vehículos de carga pesada y maquinaria, además de la gestión de importaciones de todo tipo de productos.',
   yearsOfExperience: 15,
 
-  // Teléfonos (Contactos y Cotizaciones)
+  // Teléfonos (Contactos, Cotizaciones y Ventas)
   phone: '+593979796220',
   phoneDisplay: '0979796220',
   phoneSecondary: '+593981123132',
   phoneSecondaryDisplay: '0981123132',
+  phoneSales: '+593978998252',
+  phoneSalesDisplay: '0978998252',
 
-  // WhatsApp (Cotizaciones principal)
-  whatsappNumber: '593981123132',
-  whatsappDisplay: '0981123132',
+  // WhatsApp (Directo / Central: 0979796220 | Cotizaciones: 0981123132 | Ventas: 0978998252)
+  whatsappNumber: '593979796220',
+  whatsappDisplay: '0979796220',
+  whatsappQuotesNumber: '593981123132',
+  whatsappQuotesDisplay: '0981123132',
+  whatsappSalesNumber: '593978998252',
+  whatsappSalesDisplay: '0978998252',
 
   // Emails
   email: 'vallelogistics01@gmail.com',
@@ -74,7 +88,9 @@ export const COMPANY_DATA: CompanyData = {
   social: {
     facebook: 'https://www.facebook.com/share/1VREEr7f1U/',
     tiktok: 'https://www.tiktok.com/@importadora.valle7',
-    whatsapp: 'https://wa.me/593981123132',
+    instagram: 'https://instagram.com/vallelogisticsimportadora?utm_source=qr&psln=MXF6cm5tdHd1MnYxaA==',
+    whatsapp: 'https://wa.me/593979796220',
+    whatsappQuotes: 'https://wa.me/593981123132',
     whatsappContact: 'https://wa.me/593979796220',
   },
 
@@ -120,12 +136,20 @@ export const COMPANY_DATA: CompanyData = {
     'https://maps.google.com/maps?q=Edmundo+Granda+Ugalde,+Cuenca,+Ecuador&t=&z=16&ie=UTF8&iwloc=&output=embed',
 };
 
-export const getWhatsAppLink = (message: string): string => {
+export const getWhatsAppLink = (
+  message: string,
+  targetNumber: string = COMPANY_DATA.whatsappNumber
+): string => {
   const encoded = encodeURIComponent(message);
-  return `https://wa.me/${COMPANY_DATA.whatsappNumber}?text=${encoded}`;
+  return `https://wa.me/${targetNumber}?text=${encoded}`;
+};
+
+export const getQuoteWhatsAppLink = (message: string): string => {
+  return getWhatsAppLink(message, COMPANY_DATA.whatsappQuotesNumber);
 };
 
 export const getProductWhatsAppLink = (productName: string, sku: string): string => {
   const text = `Hola Valle Logistics, deseo cotizar el repuesto: ${productName} (SKU: ${sku}). Por favor indíquenme disponibilidad y precio.`;
-  return getWhatsAppLink(text);
+  return getQuoteWhatsAppLink(text);
 };
+

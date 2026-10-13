@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Handshake, ThumbsUp, Clock, ChevronDown } from 'lucide-react';
-import { COMPANY_DATA, getWhatsAppLink } from '@/data/company';
+import { COMPANY_DATA, getQuoteWhatsAppLink } from '@/data/company';
 import { Reveal } from '@/components/ui/Reveal';
 
 export const MobileAboutAlliances: React.FC = () => {
@@ -23,7 +23,7 @@ export const MobileAboutAlliances: React.FC = () => {
       description ? `• Descripción del pedido: ${description}` : '',
     ].filter(Boolean);
 
-    window.open(getWhatsAppLink(parts.join('\n')), '_blank', 'noopener,noreferrer');
+    window.open(getQuoteWhatsAppLink(parts.join('\n')), '_blank', 'noopener,noreferrer');
   };
 
   return (

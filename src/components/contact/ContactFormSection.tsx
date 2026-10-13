@@ -9,6 +9,7 @@ import {
   Mail,
   MapPin,
   Facebook,
+  Instagram,
   AlertCircle,
 } from 'lucide-react';
 import { COMPANY_DATA, getWhatsAppLink } from '@/data/company';
@@ -40,6 +41,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 export const ContactFormSection: React.FC = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [lastSubmittedWhatsAppUrl, setLastSubmittedWhatsAppUrl] = useState('');
 
   const {
     register,
@@ -58,7 +60,7 @@ export const ContactFormSection: React.FC = () => {
     },
   });
 
-  const onSubmit = (data: ContactFormData) => {
+  const onSubmit = async (data: ContactFormData) => {
     setIsLoading(true);
 
     const lines = [
@@ -71,12 +73,36 @@ export const ContactFormSection: React.FC = () => {
       `• Mensaje: ${data.message}`,
     ].filter(Boolean);
 
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsSuccess(true);
-      window.open(getWhatsAppLink(lines.join('\n')), '_blank', 'noopener,noreferrer');
-      reset();
-    }, 500);
+    const waUrl = getWhatsAppLink(lines.join('\n'));
+    setLastSubmittedWhatsAppUrl(waUrl);
+
+    // Envío simultáneo por correo y apertura directa en WhatsApp
+    try {
+      await fetch(`https://formsubmit.co/ajax/${COMPANY_DATA.email}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          nombre: data.name,
+          empresa: data.company || 'No especificada',
+          telefono: data.phone,
+          email: data.email,
+          asunto: data.subject,
+          mensaje: data.message,
+          _subject: `Nuevo contacto web: ${data.subject} - ${data.name}`,
+          _template: 'table',
+        }),
+      });
+    } catch (err) {
+      console.warn('Notificación de envío de correo:', err);
+    }
+
+    setIsLoading(false);
+    setIsSuccess(true);
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
+    reset();
   };
 
   const inputBaseClass =
@@ -189,6 +215,12 @@ export const ContactFormSection: React.FC = () => {
                           >
                             Cotizaciones : {COMPANY_DATA.phoneSecondaryDisplay}
                           </a>
+                          <a
+                            href={`tel:${COMPANY_DATA.phoneSales}`}
+                            className="hover:text-[#1554F0] transition-colors block"
+                          >
+                            Ventas : {COMPANY_DATA.phoneSalesDisplay}
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -213,6 +245,15 @@ export const ContactFormSection: React.FC = () => {
                       <Facebook className="w-4 h-4" />
                     </a>
                     <a
+                      href={COMPANY_DATA.social.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram de Valle Logistics"
+                      className="w-9 h-9 rounded-full bg-[#1554F0] hover:bg-brand-navy text-white flex items-center justify-center transition-all duration-200 shadow-xs hover:-translate-y-0.5"
+                    >
+                      <Instagram className="w-4 h-4" />
+                    </a>
+                    <a
                       href={COMPANY_DATA.social.tiktok}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -225,7 +266,7 @@ export const ContactFormSection: React.FC = () => {
                       href={COMPANY_DATA.social.whatsapp}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="WhatsApp de Cotizaciones Valle Logistics"
+                      aria-label="WhatsApp Directo Valle Logistics"
                       className="w-9 h-9 rounded-full bg-[#1554F0] hover:bg-brand-navy text-white flex items-center justify-center transition-all duration-200 shadow-xs hover:-translate-y-0.5"
                     >
                       <WhatsAppIcon className="w-4 h-4" />
@@ -260,10 +301,21 @@ export const ContactFormSection: React.FC = () => {
                         ¡Mensaje Enviado con Éxito!
                       </h3>
                       <p className="text-xs sm:text-sm text-brand-gray max-w-md mx-auto leading-relaxed">
-                        Hemos recibido tu solicitud. Nuestro equipo se pondrá en contacto contigo a la
-                        brevedad.
+                        Su mensaje fue enviado a nuestro correo oficial (<strong>{COMPANY_DATA.email}</strong>) y
+                        se ha abierto WhatsApp para brindarle atención inmediata.
                       </p>
-                      <div className="pt-2">
+                      <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                        {lastSubmittedWhatsAppUrl && (
+                          <a
+                            href={lastSubmittedWhatsAppUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-heading font-bold text-xs tracking-wide transition-colors shadow-xs"
+                          >
+                            <WhatsAppIcon className="w-4 h-4" />
+                            Abrir WhatsApp
+                          </a>
+                        )}
                         <button
                           type="button"
                           onClick={() => setIsSuccess(false)}

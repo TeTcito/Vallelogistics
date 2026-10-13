@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Clock, Facebook, ArrowRight, ShieldCheck } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Facebook, Instagram, ArrowRight, ShieldCheck } from 'lucide-react';
 import { COMPANY_DATA } from '@/data/company';
 import { Button } from '@/components/ui/Button';
 import { WhatsAppIcon } from '@/components/ui/WhatsAppIcon';
@@ -90,6 +90,15 @@ export const Footer: React.FC = () => {
                     className="w-9 h-9 rounded-lg bg-brand-navy hover:bg-brand-yellow text-white hover:text-brand-navy flex items-center justify-center transition-colors shadow-xs"
                   >
                     <Facebook className="w-4 h-4" />
+                  </a>
+                  <a
+                    href={COMPANY_DATA.social.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="w-9 h-9 rounded-lg bg-brand-navy hover:bg-brand-yellow text-white hover:text-brand-navy flex items-center justify-center transition-colors shadow-xs"
+                  >
+                    <Instagram className="w-4 h-4" />
                   </a>
                   <a
                     href={COMPANY_DATA.social.tiktok}
@@ -207,6 +216,12 @@ export const Footer: React.FC = () => {
                     className="hover:text-brand-blue block transition-colors font-medium text-brand-navy"
                   >
                     Cotizaciones: {COMPANY_DATA.phoneSecondaryDisplay}
+                  </a>
+                  <a
+                    href={`tel:${COMPANY_DATA.phoneSales}`}
+                    className="hover:text-brand-blue block transition-colors font-medium text-brand-navy"
+                  >
+                    Ventas: {COMPANY_DATA.phoneSalesDisplay}
                   </a>
                 </div>
               </div>

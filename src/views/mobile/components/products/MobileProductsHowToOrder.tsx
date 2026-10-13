@@ -88,7 +88,7 @@ export const MobileProductsHowToOrder: React.FC = () => {
 
             <div className="flex flex-wrap items-center gap-4">
               <Button
-                href={`https://wa.me/${COMPANY_DATA.whatsappNumber}?text=${encodeURIComponent(
+                href={`https://wa.me/${COMPANY_DATA.whatsappQuotesNumber}?text=${encodeURIComponent(
                   'Hola Valle Logistics, tengo una máquina detenida y necesito cotizar un repuesto urgente.'
                 )}`}
                 isExternal

@@ -611,7 +611,7 @@ export const HomeFeaturedProducts: React.FC = () => {
                 Explorar Catálogo Completo ({products.length} Repuestos)
               </Button>
               <Button
-                href={`https://wa.me/${COMPANY_DATA.whatsappNumber}?text=${encodeURIComponent(
+                href={`https://wa.me/${COMPANY_DATA.whatsappQuotesNumber}?text=${encodeURIComponent(
                   'Hola Valle Logistics, busco un repuesto para mi equipo y quisiera consultar disponibilidad directa.'
                 )}`}
                 isExternal

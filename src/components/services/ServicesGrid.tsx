@@ -4,7 +4,7 @@ import { COMPANY_DATA } from '@/data/company';
 import { Reveal } from '@/components/ui/Reveal';
 
 export const ServicesGrid: React.FC = () => {
-  const whatsappQuoteUrl = `https://wa.me/${COMPANY_DATA.whatsappNumber}?text=${encodeURIComponent(
+  const whatsappQuoteUrl = `https://wa.me/${COMPANY_DATA.whatsappQuotesNumber}?text=${encodeURIComponent(
     'Hola Valle Logistics, deseo cotizar una importación / servicio logístico.'
   )}`;
 

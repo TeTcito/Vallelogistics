@@ -1,5 +1,4 @@
-import React from 'react';
-import { MapPin, Mail, Clock, Phone, Facebook } from 'lucide-react';
+import { MapPin, Mail, Clock, Phone, Facebook, Instagram } from 'lucide-react';
 import { COMPANY_DATA } from '@/data/company';
 import { WhatsAppIcon } from '@/components/ui/WhatsAppIcon';
 
@@ -46,8 +45,8 @@ export const TopBar: React.FC = () => {
           </div>
         </div>
 
-        {/* Lado derecho: Teléfonos (Contactos y Cotizaciones) y Redes Sociales */}
-        <div className="flex items-center gap-5">
+        {/* Lado derecho: Teléfonos (Contactos, Cotizaciones y Ventas) y Redes Sociales */}
+        <div className="flex items-center gap-4 xl:gap-5">
           <a
             href={`tel:${COMPANY_DATA.phone}`}
             className="flex items-center gap-1.5 hover:text-white transition-colors"
@@ -66,9 +65,19 @@ export const TopBar: React.FC = () => {
             <span>Cotizaciones: {COMPANY_DATA.phoneSecondaryDisplay}</span>
           </a>
 
+          <span className="text-slate-600">|</span>
+
+          <a
+            href={`tel:${COMPANY_DATA.phoneSales}`}
+            className="flex items-center gap-1.5 hover:text-white transition-colors"
+          >
+            <Phone className="w-3.5 h-3.5 text-brand-yellow" />
+            <span>Ventas: {COMPANY_DATA.phoneSalesDisplay}</span>
+          </a>
+
           <div className="h-3.5 w-px bg-slate-700" />
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <span className="text-slate-400 text-[11px] font-heading uppercase">Síguenos:</span>
             <a
               href={COMPANY_DATA.social.facebook}
@@ -78,6 +87,15 @@ export const TopBar: React.FC = () => {
               className="hover:text-brand-yellow transition-colors"
             >
               <Facebook className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href={COMPANY_DATA.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram de Valle Logistics"
+              className="hover:text-brand-yellow transition-colors"
+            >
+              <Instagram className="w-3.5 h-3.5" />
             </a>
             <a
               href={COMPANY_DATA.social.tiktok}

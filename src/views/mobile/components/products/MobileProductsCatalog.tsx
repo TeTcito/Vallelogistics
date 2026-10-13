@@ -283,7 +283,7 @@ export const MobileProductsCatalog: React.FC<ProductsCatalogProps> = ({
                     Restablecer Filtros
                   </Button>
                   <Button
-                    href={`https://wa.me/${COMPANY_DATA.whatsappNumber}?text=${encodeURIComponent(
+                    href={`https://wa.me/${COMPANY_DATA.whatsappQuotesNumber}?text=${encodeURIComponent(
                       `Hola Valle Logistics, busco un repuesto que no encontré en el catálogo: ${search}`
                     )}`}
                     isExternal
