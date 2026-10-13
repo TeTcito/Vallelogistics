@@ -495,22 +495,23 @@ export const ProductsCatalog: React.FC<ProductsCatalogProps> = ({
                               {product.name}
                             </h3>
 
-                            {/* Compatibilidad resumida */}
-                            <div className="mt-3 flex flex-wrap gap-1">
-                              {product.compatibility.slice(0, 2).map((comp, cIdx) => (
-                                <span
-                                  key={cIdx}
-                                  className="text-[10px] bg-brand-light text-brand-gray px-2 py-0.5 rounded font-medium"
-                                >
-                                  {comp}
-                                </span>
-                              ))}
-                              {product.compatibility.length > 2 && (
-                                <span className="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">
-                                  +{product.compatibility.length - 2}
-                                </span>
-                              )}
-                            </div>
+                            {/* Descripción del producto guardada en la administración */}
+                            {product.description ? (
+                              <p className="mt-2.5 text-xs text-brand-gray line-clamp-2 leading-relaxed">
+                                {product.description}
+                              </p>
+                            ) : product.compatibility && product.compatibility.length > 0 ? (
+                              <div className="mt-2.5 flex flex-wrap gap-1">
+                                {product.compatibility.slice(0, 2).map((comp, cIdx) => (
+                                  <span
+                                    key={cIdx}
+                                    className="text-[10px] bg-brand-light text-brand-gray px-2 py-0.5 rounded font-medium"
+                                  >
+                                    {comp}
+                                  </span>
+                                ))}
+                              </div>
+                            ) : null}
                           </div>
                         </div>
 

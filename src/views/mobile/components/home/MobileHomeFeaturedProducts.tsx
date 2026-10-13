@@ -494,17 +494,23 @@ export const MobileHomeFeaturedProducts: React.FC = () => {
                         {product.name}
                       </h4>
 
-                      {/* Compatibilidad resumida */}
-                      <div className="mt-1 flex flex-wrap gap-1">
-                        {product.compatibility.slice(0, 1).map((comp, cIdx) => (
-                          <span
-                            key={cIdx}
-                            className="text-[8px] bg-brand-light text-brand-gray px-1.5 py-0.5 rounded font-medium truncate max-w-full"
-                          >
-                            {comp}
-                          </span>
-                        ))}
-                      </div>
+                      {/* Descripción del producto guardada en la administración */}
+                      {product.description ? (
+                        <p className="mt-1 text-[9px] text-brand-gray line-clamp-2 leading-tight">
+                          {product.description}
+                        </p>
+                      ) : product.compatibility && product.compatibility.length > 0 ? (
+                        <div className="mt-1 flex flex-wrap gap-1">
+                          {product.compatibility.slice(0, 1).map((comp, cIdx) => (
+                            <span
+                              key={cIdx}
+                              className="text-[8px] bg-brand-light text-brand-gray px-1.5 py-0.5 rounded font-medium truncate max-w-full"
+                            >
+                              {comp}
+                            </span>
+                          ))}
+                        </div>
+                      ) : null}
                     </div>
                   </div>
 

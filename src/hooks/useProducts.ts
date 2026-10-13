@@ -24,7 +24,7 @@ export function useProducts() {
       compatibility:
         Array.isArray(dbProd.compatibility) && dbProd.compatibility.length > 0
           ? dbProd.compatibility
-          : ['Consulte compatibilidad técnica'],
+          : [],
       tag: (dbProd.tag as ProductTag) || undefined,
       price: dbProd.show_price && dbProd.price ? Number(dbProd.price) : undefined,
       showPrice: dbProd.show_price,
