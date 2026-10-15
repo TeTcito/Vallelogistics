@@ -67,7 +67,7 @@ export const ProductsBanner: React.FC<ProductsBannerProps> = ({ onSelectCategory
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
           {/* TARJETA PRINCIPAL IZQUIERDA FIJA: MAQUINARIA, UÑAS & HIDRÁULICA (8 COLUMNAS) */}
           <Reveal direction="left" className="lg:col-span-8 flex">
-            <div className="w-full bg-white border border-slate-200/90 rounded-sm px-6 sm:px-10 lg:px-12 pt-8 sm:pt-10 pb-8 relative overflow-hidden flex flex-col justify-center min-h-[360px] sm:min-h-[410px] shadow-subtle">
+            <div className="w-full bg-white border border-slate-200/90 rounded-sm px-6 sm:px-10 lg:px-12 pt-8 sm:pt-10 pb-8 relative overflow-hidden flex flex-col justify-center min-h-[360px] sm:min-h-[410px] shadow-subtle group">
               <div className="flex-1 grid grid-cols-1 sm:grid-cols-12 items-center gap-6 my-auto">
                 {/* Texto izquierdo */}
                 <div className="sm:col-span-6 z-10 text-left">
@@ -101,9 +101,9 @@ export const ProductsBanner: React.FC<ProductsBannerProps> = ({ onSelectCategory
                 {/* Imagen derecha sobre fondo blanco */}
                 <div className="sm:col-span-6 flex items-center justify-center relative">
                   <img
-                    src="/images/products-promo-shocks.jpg"
-                    alt="Repuestos para maquinaria pesada, uñas e hidráulica"
-                    className="w-full max-h-[250px] sm:max-h-[300px] lg:max-h-[330px] object-contain mix-blend-multiply select-none"
+                    src="/images/products-promo-unas-transparent.png"
+                    alt="Uñas y repuestos para maquinaria pesada"
+                    className="w-full max-h-[260px] sm:max-h-[310px] lg:max-h-[340px] object-contain select-none group-hover:scale-105 transition-transform duration-500 drop-shadow-sm"
                   />
                 </div>
               </div>

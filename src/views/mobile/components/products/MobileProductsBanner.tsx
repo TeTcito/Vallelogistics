@@ -81,9 +81,9 @@ export const MobileProductsBanner: React.FC<ProductsBannerProps> = ({ onSelectCa
                   {/* Imagen central */}
                   <div className="my-1 sm:my-2 flex items-center justify-center relative min-h-[85px] xs:min-h-[100px] sm:min-h-[140px]">
                     <img
-                      src="/images/products-promo-shocks.jpg"
-                      alt="Repuestos para maquinaria pesada, uñas e hidráulica"
-                      className="w-full max-h-[85px] xs:max-h-[100px] sm:max-h-[140px] object-contain mix-blend-multiply select-none"
+                      src="/images/products-promo-unas-transparent.png"
+                      alt="Uñas y repuestos para maquinaria pesada"
+                      className="w-full max-h-[85px] xs:max-h-[100px] sm:max-h-[140px] object-contain select-none drop-shadow-xs"
                     />
                   </div>
 
