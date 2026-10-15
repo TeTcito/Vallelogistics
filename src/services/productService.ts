@@ -9,7 +9,10 @@ export function getLocalProducts(): DatabaseProduct[] {
     if (raw) {
       const parsed: DatabaseProduct[] = JSON.parse(raw);
       let hadInvalidBlobs = false;
-      const sanitized = parsed.map((p) => {
+      const filtered = parsed.filter(
+        (p) => p && p.id && !p.id.startsWith('__') && p.name?.toLowerCase() !== 'probe'
+      );
+      const sanitized = filtered.map((p) => {
         // Los URLs "blob:" expiran al recargar la pestaña del navegador
         if (p.image && p.image.startsWith('blob:')) {
           hadInvalidBlobs = true;
@@ -20,7 +23,7 @@ export function getLocalProducts(): DatabaseProduct[] {
         }
         return p;
       });
-      if (hadInvalidBlobs) {
+      if (hadInvalidBlobs || filtered.length !== parsed.length) {
         saveLocalProducts(sanitized);
       }
       return sanitized;
@@ -49,9 +52,14 @@ export async function fetchAllProducts(): Promise<DatabaseProduct[]> {
       .order('created_at', { ascending: false });
 
     if (!error && data && data.length > 0) {
+      // Filtrar registros sonda o de prueba del sistema
+      const cleanRemote = data.filter(
+        (p: DatabaseProduct) => p && p.id && !p.id.startsWith('__') && p.name?.toLowerCase() !== 'probe'
+      );
+
       // Si tenemos productos locales modificados que no se hayan reflejado aún en la nube, los combinamos
       const remoteMap = new Map<string, DatabaseProduct>();
-      data.forEach((p: DatabaseProduct) => remoteMap.set(p.id, p));
+      cleanRemote.forEach((p: DatabaseProduct) => remoteMap.set(p.id, p));
 
       // Sobrescribir con locales más recientes si existen
       const pendingSync: DatabaseProduct[] = [];
@@ -119,7 +127,10 @@ export async function syncPendingLocalProducts(): Promise<{
   rlsBlocked: boolean;
 }> {
   const localList = getLocalProducts();
-  if (localList.length === 0) {
+  const validLocalList = localList.filter(
+    (p) => p && p.id && !p.id.startsWith('__') && p.name?.toLowerCase() !== 'probe'
+  );
+  if (validLocalList.length === 0) {
     return { total: 0, synced: 0, failed: 0, rlsBlocked: false };
   }
 
@@ -127,7 +138,7 @@ export async function syncPendingLocalProducts(): Promise<{
   let failed = 0;
   let rlsBlocked = false;
 
-  for (const prod of localList) {
+  for (const prod of validLocalList) {
     try {
       const { error } = await supabase
         .from('products')
@@ -147,24 +158,13 @@ export async function syncPendingLocalProducts(): Promise<{
     }
   }
 
-  return { total: localList.length, synced, failed, rlsBlocked };
+  return { total: validLocalList.length, synced, failed, rlsBlocked };
 }
 
 export async function checkCloudWritable(): Promise<{ writable: boolean; reason?: string }> {
   try {
-    const probeId = '__rls_probe__';
-    const { error } = await supabase.from('products').upsert(
-      {
-        id: probeId,
-        name: 'Probe',
-        category: 'Llantas',
-        compatibility: [],
-        rating: 5,
-        stock_status: 'Disponible',
-        show_price: false,
-      },
-      { onConflict: 'id' }
-    );
+    // Verificamos conexión y permisos con Supabase sin insertar registros ficticios en el catálogo
+    const { error } = await supabase.from('products').select('id').limit(1);
 
     if (error) {
       if (error.code === '42501' || error.message.toLowerCase().includes('policy')) {
@@ -176,8 +176,6 @@ export async function checkCloudWritable(): Promise<{ writable: boolean; reason?
       return { writable: false, reason: error.message };
     }
 
-    // Limpiar el registro sonda
-    await supabase.from('products').delete().eq('id', probeId);
     return { writable: true };
   } catch (err: any) {
     return { writable: false, reason: err.message };
