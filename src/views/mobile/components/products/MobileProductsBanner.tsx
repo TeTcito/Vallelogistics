@@ -67,23 +67,23 @@ export const MobileProductsBanner: React.FC<ProductsBannerProps> = ({ onSelectCa
                 <div className="flex-1 flex flex-col justify-between">
                   {/* Texto superior */}
                   <div className="text-left">
-                    <span className="block font-heading font-light text-[9px] xs:text-[10px] sm:text-xs text-brand-gray tracking-wide uppercase">
-                      MAQUINARIA PESADA
+                    <span className="block font-heading font-light text-[8.5px] xs:text-[9.5px] sm:text-xs text-brand-gray tracking-wide uppercase">
+                      REPUESTOS &amp; HERRAMIENTAS GET
                     </span>
-                    <h1 className="font-heading font-black text-[12px] xs:text-[13.5px] sm:text-xl uppercase text-brand-navy leading-tight mt-0.5 tracking-tight">
-                      UÑAS &amp; HIDRÁULICA
+                    <h1 className="font-heading font-black text-[11.5px] xs:text-[13px] sm:text-xl uppercase text-brand-navy leading-tight mt-0.5 tracking-tight">
+                      UÑAS DE EXCAVADORA &amp; MAQUINARIA
                     </h1>
-                    <p className="text-[8.5px] xs:text-[9.5px] sm:text-xs text-brand-gray font-normal mt-1 leading-snug line-clamp-2">
-                      Herramientas de corte GET, bombas hidráulicas y repuestos garantizados.
+                    <p className="text-[8px] xs:text-[9px] sm:text-xs text-brand-gray font-normal mt-1 leading-snug line-clamp-2">
+                      Herramientas de corte GET, puntas para balde y repuestos garantizados.
                     </p>
                   </div>
 
                   {/* Imagen central */}
-                  <div className="my-1 sm:my-2 flex items-center justify-center relative min-h-[85px] xs:min-h-[100px] sm:min-h-[140px]">
+                  <div className="my-1 sm:my-2 flex items-center justify-center relative min-h-[90px] xs:min-h-[105px] sm:min-h-[140px]">
                     <img
                       src="/images/products-promo-unas-transparent.png"
-                      alt="Uñas y repuestos para maquinaria pesada"
-                      className="w-full max-h-[85px] xs:max-h-[100px] sm:max-h-[140px] object-contain select-none drop-shadow-xs"
+                      alt="Uñas de excavadora y repuestos para maquinaria pesada"
+                      className="w-full max-h-[90px] xs:max-h-[105px] sm:max-h-[140px] object-contain select-none drop-shadow-sm"
                     />
                   </div>
 

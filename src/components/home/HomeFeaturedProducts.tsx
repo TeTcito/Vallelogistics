@@ -145,11 +145,11 @@ export const HomeFeaturedProducts: React.FC = () => {
                 }}
               />
 
-              {/* Imagen del amortiguador/cilindro hidráulico */}
-              <div className="absolute right-[-10px] top-[-10px] w-36 sm:w-42 lg:w-46 h-60 sm:h-68 lg:h-72 pointer-events-none z-0">
+              {/* Imagen de la uña de excavadora */}
+              <div className="absolute right-0 sm:right-2 top-1/2 -translate-y-1/2 w-36 sm:w-44 lg:w-48 h-56 sm:h-64 lg:h-68 pointer-events-none z-0">
                 <img
-                  src="/images/promo-shock-strut-transparent.png"
-                  alt="Cilindro hidráulico y herramientas de corte para maquinaria pesada"
+                  src="/images/products-promo-unas-transparent.png"
+                  alt="Uñas de excavadora y repuestos para maquinaria pesada"
                   className="w-full h-full object-contain drop-shadow-2xl group-hover:scale-105 group-hover:-translate-y-1 transition-transform duration-500"
                 />
               </div>
@@ -160,10 +160,10 @@ export const HomeFeaturedProducts: React.FC = () => {
                   HERRAMIENTAS GET
                 </span>
                 <h3 className="font-heading font-black text-2xl sm:text-3xl lg:text-4xl uppercase tracking-tighter text-white leading-none">
-                  UÑAS DE<br />TRACTOR
+                  UÑAS DE EXCAVADORA<br /><span className="text-brand-yellow">&amp; MAQUINARIA</span>
                 </h3>
                 <p className="text-xs sm:text-sm font-medium text-blue-100 pt-0.5 leading-snug">
-                  Dientes CAT &amp; hidráulica
+                  Dientes CAT, cuchillas &amp; repuestos
                 </p>
               </div>
 
@@ -372,13 +372,13 @@ export const HomeFeaturedProducts: React.FC = () => {
                 </div>
                 <div className="min-w-0">
                   <span className="text-[11px] font-heading uppercase font-semibold text-brand-yellow block">
-                    2. Maquinaria Pesada &amp; Uñas
+                    2. Uñas de Excavadora &amp; Maquinaria
                   </span>
                   <span
                     className="font-heading font-bold text-xs sm:text-sm uppercase truncate block"
                     title="Repuestos para Maquinaria"
                   >
-                    Repuestos Maquinaria
+                    Uñas &amp; Maquinaria
                   </span>
                 </div>
               </button>

@@ -73,15 +73,15 @@ export const ProductsBanner: React.FC<ProductsBannerProps> = ({ onSelectCategory
                 <div className="sm:col-span-6 z-10 text-left">
                   <h1 className="uppercase text-brand-navy tracking-tight">
                     <span className="block font-heading font-light text-2xl sm:text-3xl lg:text-[2.45rem] leading-[1.08]">
-                      MAQUINARIA PESADA
+                      UÑAS DE EXCAVADORA
                     </span>
                     <span className="block font-heading font-black text-2xl sm:text-3xl lg:text-[2.55rem] leading-[1.08] mt-0.5">
-                      UÑAS &amp; HIDRÁULICA
+                      &amp; MAQUINARIA
                     </span>
                   </h1>
 
                   <p className="text-sm sm:text-base lg:text-[1.08rem] text-brand-gray font-normal mt-3 mb-7 leading-snug">
-                    Herramientas de corte GET, puntas forjadas, bombas hidráulicas y repuestos de alto rendimiento para maquinaria pesada.
+                    Herramientas de corte GET, puntas forjadas para balde, bombas hidráulicas y repuestos de alto rendimiento para maquinaria pesada.
                   </p>
 
                   <button
@@ -102,8 +102,8 @@ export const ProductsBanner: React.FC<ProductsBannerProps> = ({ onSelectCategory
                 <div className="sm:col-span-6 flex items-center justify-center relative">
                   <img
                     src="/images/products-promo-unas-transparent.png"
-                    alt="Uñas y repuestos para maquinaria pesada"
-                    className="w-full max-h-[260px] sm:max-h-[310px] lg:max-h-[340px] object-contain select-none group-hover:scale-105 transition-transform duration-500 drop-shadow-sm"
+                    alt="Uñas de excavadora y repuestos para maquinaria pesada"
+                    className="w-full max-h-[260px] sm:max-h-[310px] lg:max-h-[340px] object-contain select-none group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
                   />
                 </div>
               </div>

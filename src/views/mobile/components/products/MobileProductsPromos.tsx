@@ -95,8 +95,8 @@ export const MobileProductsPromos: React.FC<ProductsPromosProps> = ({ onSelectCa
                 </div>
 
                 <h3 className="font-heading font-black text-2xl sm:text-3xl lg:text-4xl uppercase tracking-tight text-white leading-tight drop-shadow-md">
-                  Uñas y Dientes <br />
-                  <span className="text-brand-yellow font-black">para Tractores</span>
+                  Uñas de Excavadora <br />
+                  <span className="text-brand-yellow font-black">&amp; Maquinaria</span>
                 </h3>
 
                 <p className="text-xs sm:text-sm text-slate-200 leading-relaxed drop-shadow">
@@ -112,7 +112,7 @@ export const MobileProductsPromos: React.FC<ProductsPromosProps> = ({ onSelectCa
                   onClick={() => handleCategoryClick('Repuestos para Maquinaria')}
                   className="group/btn inline-flex items-center gap-2.5 bg-brand-yellow hover:bg-brand-yellow-hover text-brand-navy font-heading font-black text-xs sm:text-sm uppercase tracking-wider pl-5 pr-2 py-2 rounded-lg shadow-yellow transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
                 >
-                  <span>Explorar Uñas y Maquinaria</span>
+                  <span>Explorar Uñas de Excavadora &amp; Maquinaria</span>
                   <span className="w-7 h-7 rounded bg-brand-navy text-white flex items-center justify-center transition-transform duration-300 group-hover/btn:translate-x-1 shadow-sm">
                     <ArrowRight className="w-3.5 h-3.5" />
                   </span>

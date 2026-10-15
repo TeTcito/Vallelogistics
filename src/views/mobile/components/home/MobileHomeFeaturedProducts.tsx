@@ -216,23 +216,23 @@ export const MobileHomeFeaturedProducts: React.FC = () => {
                 }}
               />
 
-              {/* Imagen del cilindro/amortiguador */}
-              <div className="absolute right-0 sm:right-1 -top-3.5 sm:-top-4 w-[105px] sm:w-[118px] h-[135px] sm:h-[150px] pointer-events-none z-0">
+              {/* Imagen de la uña de excavadora */}
+              <div className="absolute right-0.5 sm:right-1.5 top-1/2 -translate-y-1/2 w-[90px] sm:w-[105px] h-[105px] sm:h-[120px] pointer-events-none z-0">
                 <img
-                  src="/images/promo-shock-strut-transparent.png"
-                  alt="Cilindro hidráulico y herramientas de corte"
+                  src="/images/products-promo-unas-transparent.png"
+                  alt="Uñas de excavadora y repuestos para maquinaria pesada"
                   className="w-full h-full object-contain drop-shadow-md group-hover:scale-105 group-hover:-translate-y-1 transition-transform duration-300"
                 />
               </div>
 
               {/* Textos ampliados y con excelente distribución para llenar el espacio central */}
               <div className="relative z-10 max-w-[130px] sm:max-w-[155px] space-y-1">
-                <h3 className="font-heading font-black text-[13px] sm:text-[14.5px] uppercase tracking-tight text-white leading-[1.12]">
-                  <span className="block">UÑAS DE TRACTOR</span>
-                  <span className="block text-brand-yellow font-black text-[11.5px] sm:text-[12.5px]">&amp; MAQUINARIA</span>
+                <h3 className="font-heading font-black text-[11.5px] sm:text-[13px] uppercase tracking-tight text-white leading-[1.12]">
+                  <span className="block">UÑAS DE EXCAVADORA</span>
+                  <span className="block text-brand-yellow font-black text-[10.5px] sm:text-[11.5px]">&amp; MAQUINARIA</span>
                 </h3>
-                <p className="text-[9.5px] sm:text-[10px] font-medium text-blue-100 leading-snug">
-                  Dientes CAT, cuchillas e hidráulica pesada
+                <p className="text-[8.5px] sm:text-[9.5px] font-medium text-blue-100 leading-snug">
+                  Dientes CAT, puntas forjadas &amp; repuestos
                 </p>
               </div>
 
@@ -343,8 +343,8 @@ export const MobileHomeFeaturedProducts: React.FC = () => {
             >
               <Tractor className="w-3.5 h-3.5" />
             </div>
-            <span className="font-heading font-black text-[9.5px] sm:text-[10.5px] uppercase truncate w-full">
-              Maquinaria
+            <span className="font-heading font-black text-[8.5px] xs:text-[9.5px] sm:text-[10.5px] uppercase truncate w-full">
+              Uñas &amp; Maquinaria
             </span>
           </button>
 
