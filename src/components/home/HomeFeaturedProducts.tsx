@@ -78,12 +78,12 @@ export const HomeFeaturedProducts: React.FC = () => {
         {/* =========================================================================
             PARTE 1: CUADRÍCULA DE 3 COLUMNAS / 4 TARJETAS (ESPACIADO EXACTO 7PX)
             ========================================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-[7px] mb-14 sm:mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-[7px] items-stretch mb-14 sm:mb-16">
           {/* =========================================================================
               COLUMNA 1 (AMARILLO): REPUESTOS ACTROS - MERCEDES BENZ
               ========================================================================= */}
-          <Reveal direction="left" delay={0.05} distance={40}>
-            <div className="relative rounded-2xl overflow-hidden bg-brand-yellow p-6 sm:p-7 flex flex-col justify-between h-[250px] sm:h-[270px] lg:h-[280px] shadow-sm hover:shadow-card border border-amber-300/60 group">
+          <Reveal direction="left" delay={0.05} distance={40} className="h-full flex">
+            <div className="w-full relative rounded-2xl overflow-hidden bg-brand-yellow p-6 sm:p-7 flex flex-col justify-between h-full min-h-[280px] sm:min-h-[300px] lg:min-h-[308px] shadow-sm hover:shadow-card border border-amber-300/60 group">
               {/* Rayas diagonales decorativas estilo industrial en esquina superior izquierda */}
               <div
                 className="absolute top-0 left-0 w-32 h-24 pointer-events-none opacity-20"
@@ -134,8 +134,8 @@ export const HomeFeaturedProducts: React.FC = () => {
           {/* =========================================================================
               COLUMNA 2 (AZUL): UÑAS DE TRACTOR & MAQUINARIA
               ========================================================================= */}
-          <Reveal direction="scale" delay={0.14}>
-            <div className="relative rounded-2xl overflow-hidden bg-brand-blue p-6 sm:p-7 flex flex-col justify-between h-[250px] sm:h-[270px] lg:h-[280px] shadow-sm hover:shadow-card border border-blue-400/30 group">
+          <Reveal direction="scale" delay={0.14} className="h-full flex">
+            <div className="w-full relative rounded-2xl overflow-hidden bg-brand-blue p-6 sm:p-7 flex flex-col justify-between h-full min-h-[280px] sm:min-h-[300px] lg:min-h-[308px] shadow-sm hover:shadow-card border border-blue-400/30 group">
               {/* Patrón de gradiente de iluminación en fondo */}
               <div
                 className="absolute inset-0 pointer-events-none opacity-20"
@@ -155,12 +155,12 @@ export const HomeFeaturedProducts: React.FC = () => {
               </div>
 
               {/* Textos concisos */}
-              <div className="relative z-10 max-w-[190px] sm:max-w-[210px] space-y-1.5">
+              <div className="relative z-10 max-w-[180px] sm:max-w-[195px] space-y-1.5">
                 <span className="inline-block text-[10px] font-heading font-black uppercase tracking-wider text-brand-yellow bg-white/10 px-2 py-0.5 rounded">
                   HERRAMIENTAS GET
                 </span>
-                <h3 className="font-heading font-black text-2xl sm:text-3xl lg:text-4xl uppercase tracking-tighter text-white leading-none">
-                  UÑAS DE EXCAVADORA<br /><span className="text-brand-yellow">&amp; MAQUINARIA</span>
+                <h3 className="font-heading font-black text-lg sm:text-xl lg:text-[22px] uppercase tracking-tight text-white leading-[1.1]">
+                  UÑAS DE<br />EXCAVADORA<br /><span className="text-brand-yellow whitespace-nowrap">&amp; MAQUINARIA</span>
                 </h3>
                 <p className="text-xs sm:text-sm font-medium text-blue-100 pt-0.5 leading-snug">
                   Dientes CAT, cuchillas &amp; repuestos
@@ -184,15 +184,15 @@ export const HomeFeaturedProducts: React.FC = () => {
           {/* =========================================================================
               COLUMNA 3 (DERECHA - 2 TARJETAS APILADAS SIN ETIQUETAS)
               ========================================================================= */}
-          <div className="flex flex-col gap-[7px] justify-between h-[250px] sm:h-[270px] lg:h-[280px]">
+          <div className="flex flex-col gap-[7px] justify-between h-full min-h-[280px] sm:min-h-[300px] lg:min-h-[308px]">
             {/* TARJETA SUPERIOR: LLANTAS RADIALES & OTR (SIN ETIQUETA, IMAGEN TRANSPARENTE) */}
             <Reveal direction="right" delay={0.18} distance={38} className="flex-1 flex">
               <div
                 onClick={() => handleSelectCategory('Llantas')}
-                className="w-full relative rounded-2xl overflow-hidden bg-[#0A1124] p-4 sm:p-5 flex flex-col justify-between flex-1 shadow-sm hover:shadow-card border border-white/10 hover:border-brand-yellow/50 transition-all duration-300 cursor-pointer group"
+                className="w-full h-full relative rounded-2xl overflow-hidden bg-[#0A1124] p-4 sm:p-5 flex flex-col justify-between flex-1 shadow-sm hover:shadow-card border border-white/10 hover:border-brand-yellow/50 transition-all duration-300 cursor-pointer group"
               >
-                {/* Imagen sin fondo de llanta de alta calidad */}
-                <div className="absolute right-[-6px] bottom-[-6px] w-28 sm:w-32 h-28 sm:h-32 pointer-events-none z-0">
+                {/* Imagen sin fondo de llanta de alta calidad (movida 20px a la izquierda) */}
+                <div className="absolute right-[14px] bottom-[-6px] w-28 sm:w-32 h-28 sm:h-32 pointer-events-none z-0">
                   <img
                     src="/images/promo-otr-tyres-transparent.png"
                     alt="Llantas radiales y OTR minería sin fondo"
@@ -229,10 +229,10 @@ export const HomeFeaturedProducts: React.FC = () => {
                     '_blank'
                   );
                 }}
-                className="w-full relative rounded-2xl overflow-hidden bg-[#0A1124] p-4 sm:p-5 flex flex-col justify-between flex-1 shadow-sm hover:shadow-card border border-white/10 hover:border-red-500/50 transition-all duration-300 cursor-pointer group"
+                className="w-full h-full relative rounded-2xl overflow-hidden bg-[#0A1124] p-4 sm:p-5 flex flex-col justify-between flex-1 shadow-sm hover:shadow-card border border-white/10 hover:border-red-500/50 transition-all duration-300 cursor-pointer group"
               >
-                {/* Imagen sin fondo de batería industrial de alta potencia */}
-                <div className="absolute right-[-6px] bottom-[-6px] w-28 sm:w-32 h-28 sm:h-32 pointer-events-none z-0">
+                {/* Imagen sin fondo de batería industrial de alta potencia (movida 20px a la izquierda) */}
+                <div className="absolute right-[14px] bottom-[-6px] w-28 sm:w-32 h-28 sm:h-32 pointer-events-none z-0">
                   <img
                     src="/images/promo-battery-transparent.png"
                     alt="Baterías industriales y componentes de potencia sin fondo"
