@@ -15,7 +15,7 @@ export function useProducts() {
       name: dbProd.name,
       category: dbProd.category,
       subcategory: dbProd.subcategory || 'General',
-      brand: dbProd.brand || 'Valle Logistics',
+      brand: 'Valle Logistics',
       sku: dbProd.sku || `VL-${dbProd.id.slice(0, 6)}`,
       image:
         dbProd.image && !dbProd.image.startsWith('blob:')

@@ -95,9 +95,15 @@ export const ProductsCatalog: React.FC<ProductsCatalogProps> = ({
         }
       }
 
-      // 3. Filtro de Marca
+      // 3. Filtro de Marca (Busca en marca, compatibilidad y nombre)
       if (selectedBrand !== 'all') {
-        if (!item.brand.toLowerCase().includes(selectedBrand.toLowerCase())) {
+        const queryBrand = selectedBrand.toLowerCase();
+        const matchesBrand = item.brand.toLowerCase().includes(queryBrand);
+        const matchesCompat = item.compatibility.some((c) =>
+          c.toLowerCase().includes(queryBrand)
+        );
+        const matchesName = item.name.toLowerCase().includes(queryBrand);
+        if (!matchesBrand && !matchesCompat && !matchesName) {
           return false;
         }
       }
@@ -481,7 +487,7 @@ export const ProductsCatalog: React.FC<ProductsCatalogProps> = ({
                           <div className="p-5">
                             <div className="flex items-center justify-between text-xs text-brand-gray mb-1">
                               <span className="font-heading uppercase font-semibold text-brand-blue">
-                                {product.brand}
+                                {product.brand || 'Valle Logistics'}
                               </span>
                               <span className="font-mono text-[11px] bg-slate-100 px-1.5 py-0.5 rounded">
                                 {product.sku}
@@ -642,7 +648,7 @@ export const ProductsCatalog: React.FC<ProductsCatalogProps> = ({
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-heading uppercase font-bold text-brand-blue">
-                    {quickViewProduct.brand}
+                    {quickViewProduct.brand || 'Valle Logistics'}
                   </span>
                   {quickViewProduct.tag && (
                     <Badge variant="yellow" size="sm">

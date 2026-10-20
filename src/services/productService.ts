@@ -14,14 +14,15 @@ export function getLocalProducts(): DatabaseProduct[] {
       );
       const sanitized = filtered.map((p) => {
         // Los URLs "blob:" expiran al recargar la pestaña del navegador
-        if (p.image && p.image.startsWith('blob:')) {
+        const needsBlobFix = Boolean(p.image && p.image.startsWith('blob:'));
+        if (needsBlobFix) {
           hadInvalidBlobs = true;
-          return {
-            ...p,
-            image: '/images/hero-truck-boxes.png',
-          };
         }
-        return p;
+        return {
+          ...p,
+          brand: 'Valle Logistics',
+          image: needsBlobFix ? '/images/hero-truck-boxes.png' : p.image,
+        };
       });
       if (hadInvalidBlobs || filtered.length !== parsed.length) {
         saveLocalProducts(sanitized);
