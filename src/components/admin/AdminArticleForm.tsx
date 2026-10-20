@@ -177,6 +177,7 @@ export const AdminArticleForm: React.FC<AdminArticleFormProps> = ({
         name: name.trim(),
         description: description.trim() || null,
         category,
+        brand: 'Valle Logistics',
         tag: tag || null,
         price: parsedPrice,
         show_price: showPrice,

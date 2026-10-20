@@ -377,7 +377,7 @@ export const MobileProductsCatalog: React.FC<ProductsCatalogProps> = ({
                           <div className="p-2.5 xs:p-3">
                             <div className="flex items-center justify-between text-[10px] xs:text-[11px] text-brand-gray mb-1">
                               <span className="font-heading uppercase font-bold text-brand-blue truncate">
-                                {product.brand || 'Valle Logistics'}
+                                Valle Logistics
                               </span>
                               <span className="font-mono text-[9px] bg-slate-100 px-1 py-0.5 rounded truncate">
                                 {product.sku}
@@ -537,7 +537,7 @@ export const MobileProductsCatalog: React.FC<ProductsCatalogProps> = ({
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-heading uppercase font-bold text-brand-blue">
-                    {quickViewProduct.brand || 'Valle Logistics'}
+                    Valle Logistics
                   </span>
                   {quickViewProduct.tag && (
                     <Badge variant="yellow" size="sm">

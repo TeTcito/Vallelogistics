@@ -68,7 +68,7 @@ export const AdminArticleCard: React.FC<AdminArticleCardProps> = ({
         <div className="p-4 sm:p-5">
           <div className="flex items-center justify-between text-xs text-brand-gray mb-1.5">
             <span className="font-heading uppercase font-semibold text-brand-blue truncate max-w-[65%]">
-              {product.brand || 'Valle Logistics'}
+              Valle Logistics
             </span>
             {product.sku && (
               <span className="font-mono text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-600">

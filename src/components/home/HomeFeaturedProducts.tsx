@@ -531,7 +531,7 @@ export const HomeFeaturedProducts: React.FC = () => {
                       <div className="p-4">
                         <div className="flex items-center justify-between text-[11px] text-brand-gray mb-1">
                           <span className="font-heading uppercase font-semibold text-brand-blue">
-                            {product.brand || 'Valle Logistics'}
+                            Valle Logistics
                           </span>
                           <span className="font-mono text-[10px] bg-slate-100 px-1.5 py-0.5 rounded">
                             {product.sku}
@@ -648,7 +648,7 @@ export const HomeFeaturedProducts: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-heading uppercase font-bold text-brand-blue">
-                    {quickViewProduct.brand || 'Valle Logistics'}
+                    Valle Logistics
                   </span>
                   {quickViewProduct.tag && (
                     <Badge variant="yellow" size="sm">

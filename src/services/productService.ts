@@ -8,15 +8,16 @@ export function getLocalProducts(): DatabaseProduct[] {
     const raw = localStorage.getItem(LOCAL_PRODUCTS_KEY);
     if (raw) {
       const parsed: DatabaseProduct[] = JSON.parse(raw);
-      let hadInvalidBlobs = false;
+      let hadChanges = false;
       const filtered = parsed.filter(
         (p) => p && p.id && !p.id.startsWith('__') && p.name?.toLowerCase() !== 'probe'
       );
       const sanitized = filtered.map((p) => {
         // Los URLs "blob:" expiran al recargar la pestaña del navegador
         const needsBlobFix = Boolean(p.image && p.image.startsWith('blob:'));
-        if (needsBlobFix) {
-          hadInvalidBlobs = true;
+        const needsBrandFix = p.brand !== 'Valle Logistics';
+        if (needsBlobFix || needsBrandFix) {
+          hadChanges = true;
         }
         return {
           ...p,
@@ -24,7 +25,7 @@ export function getLocalProducts(): DatabaseProduct[] {
           image: needsBlobFix ? '/images/hero-truck-boxes.png' : p.image,
         };
       });
-      if (hadInvalidBlobs || filtered.length !== parsed.length) {
+      if (hadChanges || filtered.length !== parsed.length) {
         saveLocalProducts(sanitized);
       }
       return sanitized;
@@ -53,10 +54,23 @@ export async function fetchAllProducts(): Promise<DatabaseProduct[]> {
       .order('created_at', { ascending: false });
 
     if (!error && data && data.length > 0) {
-      // Filtrar registros sonda o de prueba del sistema
-      const cleanRemote = data.filter(
-        (p: DatabaseProduct) => p && p.id && !p.id.startsWith('__') && p.name?.toLowerCase() !== 'probe'
-      );
+      // Filtrar registros sonda o de prueba del sistema y normalizar marca a Valle Logistics
+      const cleanRemote = data
+        .filter(
+          (p: DatabaseProduct) => p && p.id && !p.id.startsWith('__') && p.name?.toLowerCase() !== 'probe'
+        )
+        .map((p: DatabaseProduct) => ({
+          ...p,
+          brand: 'Valle Logistics',
+        }));
+
+      // Sincronizar en segundo plano la marca en Supabase si había nombres antiguos
+      Promise.resolve(
+        supabase
+          .from('products')
+          .update({ brand: 'Valle Logistics' })
+          .neq('brand', 'Valle Logistics')
+      ).catch(() => {});
 
       // Si tenemos productos locales modificados que no se hayan reflejado aún en la nube, los combinamos
       const remoteMap = new Map<string, DatabaseProduct>();
@@ -65,11 +79,12 @@ export async function fetchAllProducts(): Promise<DatabaseProduct[]> {
       // Sobrescribir con locales más recientes si existen
       const pendingSync: DatabaseProduct[] = [];
       localList.forEach((local) => {
+        const normalizedLocal = { ...local, brand: 'Valle Logistics' };
         const existingRemote = remoteMap.get(local.id);
         if (!existingRemote) {
-          pendingSync.push(local);
+          pendingSync.push(normalizedLocal);
         }
-        remoteMap.set(local.id, local);
+        remoteMap.set(local.id, normalizedLocal);
       });
 
       // Intentar sincronizar en segundo plano productos que solo están en local
@@ -79,11 +94,13 @@ export async function fetchAllProducts(): Promise<DatabaseProduct[]> {
         }, 1000);
       }
 
-      return Array.from(remoteMap.values()).sort((a, b) => {
-        const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
-        const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
-        return timeB - timeA;
-      });
+      return Array.from(remoteMap.values())
+        .map((p) => ({ ...p, brand: 'Valle Logistics' }))
+        .sort((a, b) => {
+          const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
+          const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
+          return timeB - timeA;
+        });
     }
   } catch (err) {
     console.warn('Aviso al conectar con Supabase, usando respaldo local:', err);
@@ -91,11 +108,13 @@ export async function fetchAllProducts(): Promise<DatabaseProduct[]> {
 
   // Si la base remota no respondió o está vacía, usar local o inicial
   if (localList.length > 0) {
-    return localList.sort((a, b) => {
-      const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
-      const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
-      return timeB - timeA;
-    });
+    return localList
+      .map((p) => ({ ...p, brand: 'Valle Logistics' }))
+      .sort((a, b) => {
+        const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
+        return timeB - timeA;
+      });
   }
 
   // Convertir PRODUCTS_DATA a DatabaseProduct
@@ -188,6 +207,7 @@ export async function persistProduct(product: DatabaseProduct): Promise<{
   cloudSynced: boolean;
   cloudError?: string;
 }> {
+  product.brand = 'Valle Logistics';
   // Asegurar fecha de creación para ordenación correcta
   if (!product.created_at) {
     product.created_at = new Date().toISOString();
